@@ -67,7 +67,9 @@ export default function App() {
               </div>
 
               <div className="row w-50">
-                <Flag {...locationData} />
+                <div classNAme="row">
+                  <Flag {...locationData} />
+                </div>
               </div>
             </>
           )}
