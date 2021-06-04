@@ -6,11 +6,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import mockData from "./mock.json";
 
-const {
-  REACT_APP_IPIFY_URL,
-  REACT_APP_IPIFY_KEY,
-  REACT_APP_FLAG_URL
-} = process.env;
+const { REACT_APP_IPIFY_URL, REACT_APP_IPIFY_KEY, REACT_APP_FLAG_URL } =
+  process.env;
 
 const ipifyUrl = `${REACT_APP_IPIFY_URL}?apiKey=${REACT_APP_IPIFY_KEY}`;
 const flagUrl = REACT_APP_FLAG_URL;
@@ -26,13 +23,11 @@ export default function App() {
       try {
         setIsFetching(true);
         const fetchData = await axios.get(ipifyUrl);
-        console.log(fetchData);
         const countryName = fetchData.data.location.country;
-        console.log(countryName);
         const flagData = await axios.get(`${flagUrl}/${countryName}`);
         setLocationData({
           locationData: fetchData.data,
-          flagData: flagData.data
+          flagData: flagData.data,
         });
 
         setIsFetching(false);
@@ -59,22 +54,24 @@ export default function App() {
   console.log(locationData);
 
   return (
-    <div className="card">
-      <div>
-        {" "}
-        {/* Fetch map result here https://geo.ipify.org/api/v1?apiKey=at_pYoTc61f5oaLXHzSjYJfGXSbTBJwP&ipAddress=8.8.8.8 */}
-      </div>
-      <div className="card-body">
-        <h5 className="card-title">Your Location</h5>
-        {!isFetching && (
-          <>
-            <Flag flagData={locationData.flagData} />
-            <LocationDetails locationData={locationData.locationData} />
-            <div className="">
-              <Map locationData={locationData.locationData} />
-            </div>
-          </>
-        )}
+    <div className="container-fluid d-flex justify-content-center p-5">
+      <div className="card">
+        <div>
+          {!isFetching && <Map locationData={locationData.locationData} />}
+        </div>
+        <div className="card-body row">
+          {!isFetching && (
+            <>
+              <div className="row w-50">
+                <LocationDetails {...locationData} />
+              </div>
+
+              <div className="row w-50">
+                <Flag {...locationData} />
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -1,18 +1,23 @@
 import React from "react";
 
-export default function LocationDetails({ locationData }) {
+export default function LocationDetails({ locationData, flagData }) {
   const location = locationData.location;
   const ip = locationData.ip;
-
+  console.log(locationData);
   return (
     <>
-      <p className="card-text">
-        Your IP is: {ip} <br /> and your currently located in {location.country}
-        , {location.region}, {location.city}.
-      </p>
-      <a href="#" rel="noopener noreferrer" className="btn btn-primary">
-        Go somewhere
-      </a>
+      <div className="card-text">
+        <div className="row text-primary fs-3 ps-3">
+          Your IP-adress is: {ip}
+        </div>
+        <div className="row  fs-6 p-3">
+          Apparently you live in {flagData.name}
+        </div>
+        <div className="row  fs-6 ps-3">
+          We were able to track your location to {location.region},{" "}
+          {location.city}.
+        </div>
+      </div>
     </>
   );
 }
